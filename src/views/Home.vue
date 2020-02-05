@@ -42,9 +42,9 @@ export default {
     }
   },
   methods: {
-    async sendData (troops, link) {
+    sendData (troops, link) {
       this.$store.state.armyint = this.$store.state.armyint.concat([troops])
-      await this.$router.push(link)
+      this.$router.push(link)
     }
   }
 }

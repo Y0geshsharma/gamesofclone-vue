@@ -1,29 +1,28 @@
 <template>
-    <el-form  class="form" :model="ArmyData" :rules="rules" ref="ArmyData">
+    <el-form  class="form" :model="ArmyData" :rules="rules" ref="u-ArmyData">
 
-         <div className="test-1" style="display:flex;flex-direction:row;width:100%;justify-content:space-around;padding:50px">
-             <el-form-item label="Kind"><el-input  size="medium" placeholder="Please Input" v-model="ArmyData.Kind" style="transform: skewX(-20deg);"> </el-input></el-form-item>
-            <el-form-item label="Description" style="width:30%;" ><el-input  type="textarea"  :autosize="{ minRows: 4}" placeholder="Please input"  v-model="ArmyData.Description" style="width:100%;transform: skewX(-20deg);" ></el-input> </el-form-item>
-        </div>
+         <el-form-item className="test-1" style="display:flex;padding:50px; display-content:space-between"  >
+             <el-form-item label="Kind"><el-input  size="medium" placeholder="Please Input" v-model="ArmyData.Kind" style="transform: skewX(-20deg);margin-right:100px"> </el-input></el-form-item>
+            <el-form-item label="Description" style="width:30%;" ><el-input  type="textarea"  :autosize="{ minRows: 4}" placeholder="Please input"  v-model="ArmyData.Description" style="width:100%;transform: skewX(-20deg);margin-left:40px" ></el-input> </el-form-item>
+         </el-form-item>
 
-         <div className="test" style="display:flex;flex-direction:row;width:100%;justify-content:space-around">
-                <el-form-item label="Strength"><el-input-number  v-model="ArmyData.Strength" label="Strength" :min="0" :max="10" style="transform: skewX(-20deg);"></el-input-number></el-form-item>
-                <el-form-item label="Agility"><el-input-number v-model="ArmyData.Agility" label="Agility" :min="0" :max="10" large style="transform: skewX(-20deg);"></el-input-number></el-form-item>
-                <el-form-item label="Intilligence"><el-input-number v-model="ArmyData.Intelligence"  :min="0" :max="10" style="transform: skewX(-20deg);"></el-input-number></el-form-item>
-                <el-form-item label="Terrain" ><el-input v-model="ArmyData.Terrain" label="Terrain"  style="transform: skewX(-20deg);" ></el-input></el-form-item>
+         <el-form-item class="test" style="display:flex;justify-content:space-between">
+                <el-form-item label="Strength"><el-input-number  v-model="ArmyData.Strength" label="Strength" :min="0" :max="10" style="transform: skewX(-20deg);margin-right:20px"></el-input-number></el-form-item>
+                <el-form-item label="Agility"><el-input-number v-model="ArmyData.Agility" label="Agility" :min="0" :max="10" large style="transform: skewX(-20deg);margin-right:20px"></el-input-number></el-form-item>
+                <el-form-item label="Intilligence"><el-input-number v-model="ArmyData.Intelligence"  :min="0" :max="10" style="transform: skewX(-20deg);margin-right:20px"></el-input-number></el-form-item>
+                <el-form-item label="Terrain" ><el-input v-model="ArmyData.Terrain" label="Terrain"  style="transform: skewX(-20deg);margin-right:20px" ></el-input></el-form-item>
 
-            </div>
-               <div className="test" style="display:flex;flex-direction:row;width:50%;justify-content:space-between">
+         </el-form-item>
+               <el-form-item class="test" style="display:flex;flex-direction:row;width:50%;justify-content:space-between">
                 <el-upload  style="border:dotted 1px white;display:grid;border-radius:5px;transform: skewX(-20deg);" ref="upload" action="" :auto-upload="false">
-                  <!-- <el-button slot="trigger" size="large" type="primary">select file</el-button> -->
                   <i slot="trigger" style="color: white;font-size:50px " class="el-icon-plus temp"></i>
                   <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
                 </el-upload>
-                <el-input label="Types" v-model="ArmyData.Types" :disabled="true" :value="ArmyData.Types"  style="transform: skewX(-20deg);color:black,width:10%;">{{ArmyData.Types}}</el-input>
-                </div>
+                <el-input label="Types" v-model="ArmyData.Types" :disabled="true" :value="ArmyData.Types"  style="transform: skewX(-20deg);color:black,width:10%;margin:20px">{{ArmyData.Types}}</el-input>
+               </el-form-item>
 
             <el-form-item class="btn">
-              <el-button type="primary" @click="submitForm('ArmyData')" style="margin:20px;">Upload</el-button>
+              <el-button type="primary" @click="Uploadarmy" style="margin:20px;">Upload</el-button>
                <el-button @click="resetForm('ArmyData')">Reset</el-button>
              </el-form-item>
 
@@ -75,9 +74,11 @@ export default {
   mounted () {
     let length = this.$store.state.armyint.length
     let armytype = this.$store.state.armyint[length - 1]
-    this.Types = armytype.Types
+    console.log('type reached', armytype)
+    this.Types = armytype.title
   },
   methods: {
+    // image functions
     onImageSelected (event) {
       console.log('test')
       console.log(event)
@@ -89,11 +90,12 @@ export default {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
     },
+    // submit form
     submitForm (formName) {
       try {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(formName)
+            return true
           } else {
             console.log('error submit!!')
             return false
@@ -103,12 +105,22 @@ export default {
         alert(error)
       }
     },
-
+    // reset form
     resetForm (formName) {
       try {
         this.$refs[formName].resetFields()
       } catch (error) {
         alert(error)
+      }
+    },
+    async Uploadarmy () {
+      if (this.submitForm === false) {
+        alert('please add the values of the army')
+      }
+      if (this.submitForm === true) {
+        this.$store.state.data = this.ArmyData
+        await this.$store.dispatch('uploadCount')
+        this.$router.push('/')
       }
     }
   }
@@ -196,6 +208,9 @@ $maincolor2:green;
        margin-top:20px
 
       }
+   }
+   .el-form-item__content{
+           display: inherit;
    }
 
 </style>

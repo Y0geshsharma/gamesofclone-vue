@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import ArmyDetails from '../views/ArmyDetails.vue'
 import Battle from '../views/Battle.vue'
 import UploadArmy from '../views/UploadArmy.vue'
+import BattleHistory from '../views/BattleHistory.vue'
+import BattleResult from '../views/BattleResult.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -39,6 +41,16 @@ const routes = [
     name: 'battleground',
     component: Battle
 
+  },
+  {
+    path: '/battlehistory',
+    name: 'battlehistory',
+    component: BattleHistory
+  },
+  {
+    path: '/battleresult',
+    name: 'battleresult',
+    component: BattleResult
   }
   // {
   //   path: '/about',

@@ -8,7 +8,9 @@ export const store = new Vuex.Store({
     DroidArmy: [],
     TroopersArmy: [],
     BattleResult: [],
-    BattleHistory: []
+    BattleHistory: [],
+    count: null,
+    data: []
   },
   actions: {
     getDroid ({ commit }) {
@@ -18,7 +20,7 @@ export const store = new Vuex.Store({
           let post = data.data
           commit('SET_DROID', post)
         })
-        .catch(error => { console.Console.log(error) })
+        .catch(error => { console.log(error) })
     },
     getTropper ({ commit }) {
       Axios
@@ -27,25 +29,45 @@ export const store = new Vuex.Store({
           let post = data.data
           commit('SET_TROPPER', post)
         })
-        .catch(error => { console.Console.log(error) })
+        .catch(error => { console.log(error) })
     },
     getResult ({ commit }) {
       Axios
-        .get('http://localhost:3001/droid')
+        .get('http://localhost:3001/showresult')
         .then(data => {
           let post = data.data
           commit('SET_RESULT', post)
         })
-        .catch(error => { console.Console.log(error) })
+        .catch(error => { console.log(error) })
     },
     getHistory ({ commit }) {
       Axios
-        .get('http://localhost:3001/droid')
+        .get('http://localhost:3001/history')
         .then(data => {
           let post = data.data
           commit('SET_HISTORY', post)
         })
-        .catch(error => { console.Console.log(error) })
+        .catch(error => { console.log(error) })
+    },
+    uploadCount ({ commit }) {
+      let totalcount = 0
+      totalcount = this.state.count
+      Axios
+        .post('http://localhost:3001/result', { totalcount })
+        .then((req, res) => {
+        })
+        .catch(error => { console.log(error) })
+    },
+    uploadarmy ({ commit }) {
+      let data = []
+      data = this.state.data
+      Axios
+        .post('http://localhost:3001/addarmy', { data })
+        .then((req, res) => {
+          alert(res)
+          this.$router.push('/')
+        })
+        .catch(error => { console.log(error) })
     }
   },
   mutations: {
