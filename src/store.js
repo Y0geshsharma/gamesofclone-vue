@@ -10,7 +10,8 @@ export const store = new Vuex.Store({
     BattleResult: [],
     BattleHistory: [],
     count: null,
-    data: []
+    imgurl: '',
+    armydata: []
   },
   actions: {
     getDroid ({ commit }) {
@@ -60,12 +61,11 @@ export const store = new Vuex.Store({
     },
     uploadarmy ({ commit }) {
       let data = []
-      data = this.state.data
+      data = this.state.armydata
+      console.log('check', data)
       Axios
         .post('http://localhost:3001/addarmy', { data })
         .then((req, res) => {
-          alert(res)
-          this.$router.push('/')
         })
         .catch(error => { console.log(error) })
     }

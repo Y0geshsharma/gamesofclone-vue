@@ -1,8 +1,8 @@
 <template>
     <div class='battle-result'>
-      <div class='mask' style="background:red"/>
+      <div class='mask' />
             <div>
-                 <!-- <img alt ="" src={require(`../assets/images/${type?'Troopers/41st_Elite_Corps.png':'droid army/Battle_Droids.png'}`)} /> -->
+                  <img :src="imgurl" />
             </div>
             <div class='winner-details'>
                 <p class='title'>{{result.Winner}} Won!</p>
@@ -23,7 +23,8 @@ export default {
   name: 'battleresult',
   data () {
     return {
-      result: []
+      result: [],
+      imgurl: ''
     }
   },
   methods: {
@@ -48,12 +49,20 @@ export default {
     resultdata: {
       handler (val) {
         this.result = val[0]
+        if (this.result.Winner === 'Clone Tropper') {
+          console.log('reached')
+          this.imgurl = '/assets/images/Troopers/41st_Elite_Corps.png'
+        } else if (this.result.Winner === 'Droid') {
+          console.log('reached')
+          this.imgurl = '/assets/images/droid army/Battle_Droids.png'
+        }
       }
     }
   }
 }
 </script>
 <style lang="scss" scoped>
+$color:blue;
 .battle-result {
   animation: reveal 1s forwards;
   img {
@@ -67,7 +76,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    background: #000;
+    background: $color;
     z-index: 10;
     opacity: 0.5;
   }

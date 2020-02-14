@@ -1,81 +1,143 @@
 <template>
-    <el-form  class="form" :model="ArmyData" :rules="rules" ref="u-ArmyData">
+<div class="container" >
+  <div class="header" >
+    <i class="el-icon-s-home" @click="gotohome" :style={color:color} style="font-size:40px;margin:20px 0px 0px 20px;cursor:pointer"></i>
+      <p class="title" :style={color:color}>ADD {{this.ruleForm.Type}}</p ></div>
+   <el-form
+    :model="ruleForm"
+    :rules="rules"
+    ref="ruleForm"
+    label-position="top"
+    label-width="120px"
+    class="armydata"
+    style="margin:5%;background:transparent"
+  >
+    <el-row :gutter="50">
+      <el-col :span="6">
+        <el-form-item label="Kind" prop="Kind">
+          <el-input v-model="ruleForm.Kind" style="transform: skewX(-20deg)"></el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="16">
+        <el-form-item label="Description" prop="Description">
+          <el-input type="textarea" v-model="ruleForm.Description" style="transform: skewX(-20deg)"></el-input>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="50">
+      <el-col :span="6">
+        <el-form-item label="Terraint" prop="Terraint">
+          <el-input v-model="ruleForm.Terraint" style="transform: skewX(-20deg)"></el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="Agility" prop="Agility">
+          <el-input-number
+            v-model="ruleForm.Agility"
+            :min="1"
+            :max="10"
+            style="transform: skewX(-20deg)"
+          ></el-input-number>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="Strength" prop="Strength">
+          <el-input-number
+            v-model="ruleForm.Strength"
+            :min="1"
+            :max="10"
+            style="transform: skewX(-20deg)"
+          ></el-input-number>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="Intelligence" prop="Intelligence">
+          <el-input-number
+            v-model="ruleForm.Intelligence"
+            :min="1"
+            :max="10"
+            style="transform: skewX(-20deg)"
+          ></el-input-number>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="50">
+      <el-col :span="16">
+        <el-form-item label="Image" prop="imageUrl" r>
+          <el-upload
+            style="border:dotted 1px white;display:grid;border-radius:5px;transform: skewX(-20deg);"
+            ref="upload"
 
-         <el-form-item className="test-1" style="display:flex;padding:50px; display-content:space-between"  >
-             <el-form-item label="Kind"><el-input  size="medium" placeholder="Please Input" v-model="ArmyData.Kind" style="transform: skewX(-20deg);margin-right:100px"> </el-input></el-form-item>
-            <el-form-item label="Description" style="width:30%;" ><el-input  type="textarea"  :autosize="{ minRows: 4}" placeholder="Please input"  v-model="ArmyData.Description" style="width:100%;transform: skewX(-20deg);margin-left:40px" ></el-input> </el-form-item>
-         </el-form-item>
-
-         <el-form-item class="test" style="display:flex;justify-content:space-between">
-                <el-form-item label="Strength"><el-input-number  v-model="ArmyData.Strength" label="Strength" :min="0" :max="10" style="transform: skewX(-20deg);margin-right:20px"></el-input-number></el-form-item>
-                <el-form-item label="Agility"><el-input-number v-model="ArmyData.Agility" label="Agility" :min="0" :max="10" large style="transform: skewX(-20deg);margin-right:20px"></el-input-number></el-form-item>
-                <el-form-item label="Intilligence"><el-input-number v-model="ArmyData.Intelligence"  :min="0" :max="10" style="transform: skewX(-20deg);margin-right:20px"></el-input-number></el-form-item>
-                <el-form-item label="Terrain" ><el-input v-model="ArmyData.Terrain" label="Terrain"  style="transform: skewX(-20deg);margin-right:20px" ></el-input></el-form-item>
-
-         </el-form-item>
-               <el-form-item class="test" style="display:flex;flex-direction:row;width:50%;justify-content:space-between">
-                <el-upload  style="border:dotted 1px white;display:grid;border-radius:5px;transform: skewX(-20deg);" ref="upload" action="" :auto-upload="false">
-                  <i slot="trigger" style="color: white;font-size:50px " class="el-icon-plus temp"></i>
-                  <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
-                </el-upload>
-                <el-input label="Types" v-model="ArmyData.Types" :disabled="true" :value="ArmyData.Types"  style="transform: skewX(-20deg);color:black,width:10%;margin:20px">{{ArmyData.Types}}</el-input>
-               </el-form-item>
-
-            <el-form-item class="btn">
-              <el-button type="primary" @click="Uploadarmy" style="margin:20px;">Upload</el-button>
-               <el-button @click="resetForm('ArmyData')">Reset</el-button>
-             </el-form-item>
-
-    </el-form>
+            multiple
+            :limit="1"
+            :on-exceed="remove"
+            action
+            :on-change="onchange"
+            :auto-upload="false"
+          >
+            <i slot="trigger" style="color: white;font-size:50px " class="el-icon-plus temp"></i>
+            <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
+          </el-upload>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item props="Types" label="Types">
+          <el-button
+          :style={color:color}
+          :disabled="true"
+            style="transform: skewX(-20deg) ;padding:10px ;"
+          >{{ruleForm.Type}}</el-button>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-form-item>
+      <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
+      <el-button @click="resetForm('ruleForm')">Reset</el-button>
+    </el-form-item>
+<div class="mask"></div>
+  </el-form>
+   </div>
 </template>
 
 <script>
 export default {
-  name: 'Uploadamy',
   data () {
     return {
-      ArmyData: {
+      color: '',
+      file: {},
+      ruleForm: {
         Kind: '',
         Description: '',
         Strength: 0,
         Agility: 0,
         Intelligence: 0,
-        Types: '',
-        Terrain: '',
-        ArmyImage: '',
-        dialogImageUrl: '',
-        dialogVisible: false },
+        Terraint: '',
+        Type: '',
+        imageUrl: ''
+      },
       rules: {
         Kind: [
-          { required: true, message: 'Please input Army Kind name', trigger: 'blur' },
-          { min: 3, message: 'Length should at least 3 characters', trigger: 'blur' }
+          { required: true, message: 'Please input Activity name', trigger: 'blur' },
+          { min: 3, max: 20, message: 'Length should be at least 3 and max 20 ', trigger: 'blur' }
         ],
         Description: [
-          { required: true, message: 'Please input the description ', trigger: 'blur' }
-        ],
-        Strength: [
-          { type: 'number', required: true, message: 'Please check it is not a number', trigger: 'change' },
-          { min: '0', max: 10, message: 'Please betweent 0 to 10', trigger: 'change' }
-
+          { required: true, message: 'Please select Activity zone', trigger: 'change' }
         ],
         Agility: [
-          { type: 'number', required: true, message: 'Please check it is not a number', trigger: 'change' },
-          { min: '0', max: 10, message: 'Please betweent 0 to 10', trigger: 'change' }
-
+          { required: true, message: 'Please pick a Strength', trigger: 'change' }
         ],
         Intelligence: [
-          { type: 'number', required: true, message: 'Please check it is not a number', trigger: 'change' },
-          { min: '0', max: 10, message: 'Please betweent 0 to 10', trigger: 'change' }
-
+          { required: true, message: 'Please pick a Intelligence', trigger: 'change' }
+        ],
+        Strength: [
+          { required: true, message: 'Please pick a Strength', trigger: 'change' }
+        ],
+        Terraint: [
+          { required: true, message: 'Please imput the tarrain', trigger: 'blur' },
+          { min: 3, max: 20, message: 'Length should be at least 3 and max 20 ', trigger: 'blur' }
         ]
       }
     }
-  },
-  mounted () {
-    let length = this.$store.state.armyint.length
-    let armytype = this.$store.state.armyint[length - 1]
-    console.log('type reached', armytype)
-    this.Types = armytype.title
   },
   methods: {
     // image functions
@@ -83,134 +145,117 @@ export default {
       console.log('test')
       console.log(event)
     },
-    handleRemove (file, fileList) {
-      console.log(file, fileList)
+    onchange (file) {
+      this.file = file
     },
-    handlePictureCardPreview (file) {
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
+    remove (fileList, file) {
+      fileList = []
+      this.file = []
     },
-    // submit form
+    gotohome () {
+      this.$router.push('/')
+    },
     submitForm (formName) {
-      try {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            return true
-          } else {
-            console.log('error submit!!')
-            return false
-          }
-        })
-      } catch (error) {
-        alert(error)
-      }
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          await this.postformdata()
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
-    // reset form
     resetForm (formName) {
-      try {
-        this.$refs[formName].resetFields()
-      } catch (error) {
-        alert(error)
+      this.$refs[formName].resetFields()
+      this.remove()
+    },
+    checktype (_link) {
+      if (_link === 'addtropperarmy') {
+        return true
+      } else if (_link === 'adddroidarmy') {
+        return false
+      } else {
+        alert('sorry')
       }
     },
-    async Uploadarmy () {
-      if (this.submitForm === false) {
+    async postformdata () {
+      if (this.ruleForm === null) {
         alert('please add the values of the army')
-      }
-      if (this.submitForm === true) {
-        this.$store.state.data = this.ArmyData
-        await this.$store.dispatch('uploadCount')
+      } else {
+        let check = await this.checktype(this.$router.history.current.name)
+        if (check) {
+          this.ruleForm.imageUrl = '@/../assets/images/Troopers/' + this.file.name
+          this.ruleForm.Type = 'clone trooper'
+        } else if (!check) {
+          this.ruleForm.imageUrl = '@/../assets/images/droidarmy/' + this.file.name
+          this.ruleForm.Type = 'droid army'
+        } else {
+          this.ruleForm.imageUrl = '@/../assets/images/droidarmy/soliders.png'
+        }
+        this.$store.state.armydata = this.ruleForm
+        await this.$store.dispatch('uploadarmy')
         this.$router.push('/')
       }
     }
+  },
+  created () {
+    let route = this.$router.history.current.name
+    if (route === 'adddroidarmy') {
+      this.color = 'red'
+      this.ruleForm.Type = 'Droid'
+    } else if (route === 'addtropperarmy') {
+      this.color = 'blue'
+      this.ruleForm.Type = 'Troppers'
+    }
   }
-
 }
 </script>
 <style lang="scss">
-$maincolor:blue;
-$maincolor2:green;
-.form {
-    height: 100%;
-    width:100%;
-    font-family: helvetica, sans-serif;
-    align-items: center;
-    background-image: url(../assets/images/mainbackground.png);
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    > h2{
-      text-align: center;
-      color:white
-    }
-
-    label {
-      color: #fff;
-      margin: 0 3% .25em;
-      display: block;
-      font-family: helvetica, sans-serif;
-      font-weight: bold
-    }
-
-    }
-    input {
-      padding: .5em .25em;
-      margin:  20px 0;
-      border-radius:5px;
-      font-size: 1.2em;
-      border: 2px solid #000;
-      outline: none;
-      transform:(all, .25s);
-      font-weight: 50px;
-
-    }
-    input:focus {
-       border: 2px solid $maincolor;
-    }
-
-    button:focus,button:hover {
-      background: $maincolor2;
-    }
-
-  .hide-show{
-    width: 50%;
-    margin: -3.62em 3% 0 1.5%;
-    position: relative;
-    z-index: 5;
-    display: none;
-
+label {
+  color: black;
+  margin: 0 3% 0.25em;
+  display: block;
+  text-shadow:black 1px 0 1px;
+  font-family: helvetica, sans-serif;
+  font-weight: bold;
+}
+.header{
+  display: flex;
+  flex-direction: row;
+  > p {
+    color: #fff;
+    font-weight: bold;
+    justify-self: center;
+    flex: 1;
+    text-align: center;
   }
-  #btn{
-    position: fixed;
+}
+.title {
+  align-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  text-shadow: 0 0 20px white;
+}
+.absolute-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.container {
+    @extend .absolute-fill;
+    top: 0;
     bottom: 0;
+    left: 0;
     right: 0;
-      button{
-        margin:10px 20px;
-        border-radius: 5px;
-        transform: skewX(-20deg);
-        cursor: pointer;
-        font-weight: bold;
-    }
+    background:transparent;
+    z-index: 10;
+    opacity: 1;
 
   }
- textarea{
-  width: 100%;
-    }
-   .el-input-number{
-     >span {
-       font-size: 1em;
-       border-radius:5px;
-       cursor: pointer;
-       margin-top:20px
-
-      }
-   }
-   .el-form-item__content{
-           display: inherit;
-   }
 
 </style>

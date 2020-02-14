@@ -2,7 +2,7 @@
    <div class="flip-card" >
        <div class="flip-card-inner">
            <div class="flip-card-front" :style={background:color}>
-               <img :src="imurl" alt=""/>
+               <img :src="imgurl" alt=""/>
             </div>
             <div class="flip-card-back">
                  <h2>{{armydata.Kind}}</h2>
@@ -28,7 +28,7 @@ export default {
   props: ['armydata', 'color'],
   data () {
     return {
-      imurl: '@/../' + this.armydata.image,
+      imgurl: this.armydata.image,
       tarrians: {}
     }
   },

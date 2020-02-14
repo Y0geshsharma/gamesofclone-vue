@@ -36,7 +36,7 @@ export default {
       Droid: {
         title: 'Droid Army',
         types: 0,
-        img: '../assets/images/droid army/soliders.png',
+        img: '../assets/images/droidarmy/soliders.png',
         color: 'red'
       }
     }

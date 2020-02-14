@@ -1,4 +1,8 @@
 <template>
+<el-row>
+  <div class="header" >
+      <p class="title" >BATTLEGROUND</p >
+  </div>
 <el-row class="battleground">
     <div class="main-battle">
         <div v-for="(army,index) in droidsTroops" v-bind:key="index" class="droid">
@@ -10,6 +14,7 @@
         <button @click="postcount" style= "background: blue;marginRight:10px;padding:5px "> <i class="el-icon-video-play"></i> Fight</button>
         <button @click="gotohome" style="background:blue;marginRight:10px;padding:5px "><i class="el-icon-s-home"></i>Home</button>
     </el-row>
+</el-row>
 </el-row>
 </template>
 <script>
@@ -72,7 +77,7 @@ export default {
       if (!this.toggle) {
         alert('please gather your troops  set!!')
       }
-      if (this.totalcount !== 0) {
+      if (this.totalcount !== 0 && this.toggle) {
         this.$store.state.count = this.totalcount
         await this.$store.dispatch('uploadCount')
         this.$router.push('battleresult')
@@ -97,7 +102,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 10%;
+    top:0;
     .main-battle{
         height: 100vh;
         display: flex;

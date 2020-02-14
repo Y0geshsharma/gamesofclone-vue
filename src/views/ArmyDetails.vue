@@ -1,4 +1,4 @@
-<template class='details'>
+<template >
   <div>
 
     <div class="row1">
@@ -7,7 +7,7 @@
 
       <i class="el-icon-d-arrow-left" :style={color:color} style="font-size:50px;cursor:pointer" @click="gotohome"></i>
 
-      <p class="titlle" :style={textShadow:color}>{{title}}</p>
+      <p class="titlle" :style="style">{{title}}</p>
 
     </div>
 
