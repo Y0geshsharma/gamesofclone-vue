@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
+import { QUERRY } from './constant'
 Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
@@ -16,7 +17,7 @@ export const store = new Vuex.Store({
   actions: {
     getDroid ({ commit }) {
       Axios
-        .get('http://localhost:3001/droid')
+        .get(QUERRY.GET_DROID)
         .then(data => {
           let post = data.data
           commit('SET_DROID', post)
@@ -25,7 +26,7 @@ export const store = new Vuex.Store({
     },
     getTropper ({ commit }) {
       Axios
-        .get('http://localhost:3001/troppers')
+        .get(QUERRY.GET_TROPPER)
         .then(data => {
           let post = data.data
           commit('SET_TROPPER', post)
@@ -34,7 +35,7 @@ export const store = new Vuex.Store({
     },
     getResult ({ commit }) {
       Axios
-        .get('http://localhost:3001/showresult')
+        .get(QUERRY.GET_RESULT)
         .then(data => {
           let post = data.data
           commit('SET_RESULT', post)
@@ -43,7 +44,7 @@ export const store = new Vuex.Store({
     },
     getHistory ({ commit }) {
       Axios
-        .get('http://localhost:3001/history')
+        .get(QUERRY.GET_HISTORY)
         .then(data => {
           let post = data.data
           commit('SET_HISTORY', post)
@@ -54,7 +55,7 @@ export const store = new Vuex.Store({
       let totalcount = 0
       totalcount = this.state.count
       Axios
-        .post('http://localhost:3001/result', { totalcount })
+        .post(QUERRY.POST_RESULT, { totalcount })
         .then((req, res) => {
         })
         .catch(error => { console.log(error) })
@@ -64,7 +65,7 @@ export const store = new Vuex.Store({
       data = this.state.armydata
       console.log('check', data)
       Axios
-        .post('http://localhost:3001/addarmy', { data })
+        .post(QUERRY.POST_ARMY, { data })
         .then((req, res) => {
         })
         .catch(error => { console.log(error) })
